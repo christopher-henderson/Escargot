@@ -16,37 +16,21 @@ func (l *LRU) Get(key string) interface{} {
 	if !ok {
 		return nil
 	}
-	l.moveToFront(node)
+	l.list.MoveToFront(node)
 	return node.Data
 }
 
 func (l *LRU) Put(key string, data interface{}) {
 	if node, ok := l.m[key]; ok {
 		node.Data = data
-		l.moveToFront(node)
+		l.list.MoveToFront(node)
 		return
 	}
-	newNode := lists.NewNode(data)
+	newNode, err := l.list.Push(data)
+	if err != nil {
+		return
+	}
 	l.m[key] = newNode
-	l.list.Push(newNode)
-}
-
-func (l *LRU) moveToFront(node *lists.Node) {
-	if node == l.list.Head {
-		return
-	}
-	if node == l.list.Tail {
-		l.list.Tail = node.Left
-	}
-	if node.Left != nil {
-		node.Left.Right = node.Right
-	}
-	if node.Right != nil {
-		node.Right.Left = node.Left
-	}
-	node.Right = l.list.Head
-	l.list.Head.Left = node
-	l.list.Head = node
 }
 
 func (l *LRU) Slice() []interface{} {

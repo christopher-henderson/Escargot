@@ -5,6 +5,6 @@ package caches
 // must honor retrieval, emplacement, and eviction.
 type Cache interface {
 	Get(key interface{}) (interface{}, error)
-	Put(key interface{}) error
+	Put(key string, value interface{}) error
 	evict() error
 }

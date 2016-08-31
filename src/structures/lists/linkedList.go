@@ -47,7 +47,7 @@ func (l *LinkedList) startCollection(data interface{}) (*Node, error) {
 	return node, nil
 }
 
-func (l *LinkedList) moveToFront(node *Node) {
+func (l *LinkedList) MoveToFront(node *Node) {
 	if node == l.Head {
 		return
 	}
