@@ -15,6 +15,12 @@ func TestEmptyList(t *testing.T) {
 	if node := list.GetTail(); node != nil {
 		t.Errorf("Got a non-nil head when empty. Node is %v", node)
 	}
+	if node := list.PopNode(); node != nil {
+		t.Errorf("Got a non-nil head data when empty. Node is %v", node)
+	}
+	if data := list.Pop(); data != nil {
+		t.Errorf("Got a non-nil head data when empty. Data is %v", data)
+	}
 	if slice := list.Slice(); len(slice) != 0 {
 		t.Errorf("LinkedList not empty. Contents are %v", slice)
 	}
@@ -212,5 +218,22 @@ func TestPopMultipleItemsAppendPush(t *testing.T) {
 	}
 	if result := list.Pop(); result != nil {
 		t.Errorf("Incorrect pop. Expected %v, got %v", nil, result)
+	}
+}
+
+func TestMoveToFront(t *testing.T) {
+	list := lists.LinkedList{}
+	dataOne := 5
+	dataTwo := 10
+	list.Append(fmt.Sprintf("%v"), dataOne)
+	list.Append(fmt.Sprintf("%v"), dataTwo)
+	head := list.Head
+	tail := list.Tail
+	list.MoveToFront(tail)
+	if tail != list.Head {
+		t.Error("Failed to move a node to the head from the LinkedList.")
+	}
+	if head != list.Tail {
+		t.Error("Failed to move a node to the tail from the LinkedList.")
 	}
 }
