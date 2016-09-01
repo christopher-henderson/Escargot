@@ -1,13 +1,14 @@
 package lists
 
 type Node struct {
+	Key   string
 	Data  interface{}
 	Left  *Node
 	Right *Node
 }
 
-func NewNode(Data interface{}) *Node {
-	return &Node{Data, nil, nil}
+func NewNode(key string, data interface{}) *Node {
+	return &Node{key, data, nil, nil}
 }
 
 type LinkedList struct {
@@ -16,33 +17,30 @@ type LinkedList struct {
 	size int
 }
 
-func (l *LinkedList) Push(data interface{}) (*Node, error) {
+func (l *LinkedList) Push(key string, data interface{}) (*Node, error) {
 	defer l.increment()
+	node := NewNode(key, data)
 	if l.size == 0 {
-		return l.startCollection(data)
+		l.Head = node
+		l.Tail = node
+		return node, nil
 	}
-	node := NewNode(data)
 	l.Head.Left = node
 	node.Right = l.Head
 	l.Head = node
 	return node, nil
 }
 
-func (l *LinkedList) Append(data interface{}) (*Node, error) {
+func (l *LinkedList) Append(key string, data interface{}) (*Node, error) {
 	defer l.increment()
+	node := NewNode(key, data)
 	if l.size == 0 {
-		return l.startCollection(data)
+		l.Head = node
+		l.Tail = node
+		return node, nil
 	}
-	node := NewNode(data)
 	node.Left = l.Tail
 	l.Tail.Right = node
-	l.Tail = node
-	return node, nil
-}
-
-func (l *LinkedList) startCollection(data interface{}) (*Node, error) {
-	node := NewNode(data)
-	l.Head = node
 	l.Tail = node
 	return node, nil
 }
@@ -76,11 +74,24 @@ func (l *LinkedList) Pop() interface{} {
 	if l.Head == nil {
 		return nil
 	}
-	defer l.decrement()
-	Data := l.Head.Data
-	l.Head = l.Head.Right
+	head := l.PopNode()
+	if head == nil {
+		return head
+	}
+	return head.Data
+}
 
-	return Data
+func (l *LinkedList) PopNode() *Node {
+	if l.Head == nil {
+		return nil
+	}
+	defer l.decrement()
+	head := l.Head
+	l.Head = l.Head.Right
+	if l.Head != nil {
+		l.Head.Left = nil
+	}
+	return head
 }
 
 func (l *LinkedList) GetTail() interface{} {

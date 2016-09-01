@@ -2,6 +2,7 @@ package tests
 
 import (
 	"Escargot/structures/lists"
+	"fmt"
 	"math/rand"
 	"testing"
 )
@@ -22,7 +23,7 @@ func TestEmptyList(t *testing.T) {
 func TestOneItemListAppend(t *testing.T) {
 	list := lists.LinkedList{}
 	data := 5
-	list.Append(data)
+	list.Append(fmt.Sprintf("%v", data), data)
 	if nodeData := list.GetHead(); nodeData == nil {
 		t.Errorf("Got nil as the head of a LinkedList with one item in it.")
 	} else if nodeData != data {
@@ -41,7 +42,7 @@ func TestOneItemListAppend(t *testing.T) {
 func TestOneItemListPush(t *testing.T) {
 	list := lists.LinkedList{}
 	data := 5
-	list.Push(data)
+	list.Push(fmt.Sprintf("%v", data), data)
 	if nodeData := list.GetHead(); nodeData == nil {
 		t.Errorf("Got nil as the head of a LinkedList with one item in it.")
 	} else if nodeData != data {
@@ -61,8 +62,8 @@ func TestTwoItemListAppend(t *testing.T) {
 	list := lists.LinkedList{}
 	dataOne := 5
 	dataTwo := "10"
-	list.Append(dataOne)
-	list.Append(dataTwo)
+	list.Append(fmt.Sprintf("%v", dataOne), dataOne)
+	list.Append(fmt.Sprintf("%v", dataTwo), dataTwo)
 	if nodeData := list.GetHead(); nodeData == nil {
 		t.Errorf("Got nil as the head of a LinkedList with two items in it.")
 	} else if nodeData != dataOne {
@@ -89,8 +90,8 @@ func TestTwoItemListPush(t *testing.T) {
 	list := lists.LinkedList{}
 	dataOne := 5
 	dataTwo := "10"
-	list.Push(dataOne)
-	list.Push(dataTwo)
+	list.Push(fmt.Sprintf("%v", dataOne), dataOne)
+	list.Push(fmt.Sprintf("%v", dataTwo), dataTwo)
 	if nodeData := list.GetHead(); nodeData == nil {
 		t.Errorf("Got nil as the head of a LinkedList with two items in it.")
 	} else if nodeData != dataTwo {
@@ -123,7 +124,7 @@ func TestPopEmpty(t *testing.T) {
 func TestPopSingleItemAppend(t *testing.T) {
 	list := lists.LinkedList{}
 	data := 5
-	list.Append(data)
+	list.Append(fmt.Sprintf("%v", data), data)
 	if result := list.Pop(); result != data {
 		t.Errorf("Incorrect pop. Expected %v, got %v", data, result)
 	}
@@ -135,7 +136,7 @@ func TestPopSingleItemAppend(t *testing.T) {
 func TestPopSingleItemPush(t *testing.T) {
 	list := lists.LinkedList{}
 	data := 5
-	list.Push(data)
+	list.Push(fmt.Sprintf("%v", data), data)
 	if result := list.Pop(); result != data {
 		t.Errorf("Incorrect pop. Expected %v, got %v", data, result)
 	}
@@ -151,7 +152,7 @@ func TestPopMultipleItemsAppend(t *testing.T) {
 	for i := 0; i < length; i++ {
 		random := rand.Int()
 		numbers = append(numbers, random)
-		list.Append(random)
+		list.Append(fmt.Sprintf("%v", random), random)
 	}
 	for _, value := range numbers {
 		if result := list.Pop(); result != value {
@@ -170,7 +171,7 @@ func TestPopMultipleItemsPush(t *testing.T) {
 	for i := 0; i < length; i++ {
 		random := rand.Int()
 		numbers = append(numbers, random)
-		list.Push(random)
+		list.Push(fmt.Sprintf("%v", random), random)
 	}
 	for index := len(numbers) - 1; index >= 0; index-- {
 		value := numbers[index]
@@ -190,12 +191,12 @@ func TestPopMultipleItemsAppendPush(t *testing.T) {
 	for i := 0; i < length/2; i++ {
 		random := rand.Int()
 		numbers = append(numbers, random)
-		list.Append(random)
+		list.Append(fmt.Sprintf("%v", random), random)
 	}
 	for i := 0; i < length/2; i++ {
 		random := rand.Int()
 		numbers = append(numbers, random)
-		list.Push(random)
+		list.Push(fmt.Sprintf("%v", random), random)
 	}
 	for i := len(numbers) - 1; i >= len(numbers)/2; i-- {
 		value := numbers[i]

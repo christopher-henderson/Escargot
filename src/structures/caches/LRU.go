@@ -26,11 +26,16 @@ func (l *LRU) Put(key string, data interface{}) {
 		l.list.MoveToFront(node)
 		return
 	}
-	newNode, err := l.list.Push(data)
+	newNode, err := l.list.Push(key, data)
 	if err != nil {
 		return
 	}
 	l.m[key] = newNode
+}
+
+func (l *LRU) evict() {
+	evicted := l.list.PopNode()
+	delete(l.m, evicted.Key)
 }
 
 func (l *LRU) Slice() []interface{} {
