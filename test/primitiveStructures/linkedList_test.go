@@ -1,4 +1,4 @@
-package tests
+package test
 
 import (
 	"Escargot/structures/lists"
@@ -225,8 +225,8 @@ func TestMoveToFront(t *testing.T) {
 	list := lists.LinkedList{}
 	dataOne := 5
 	dataTwo := 10
-	list.Append(fmt.Sprintf("%v"), dataOne)
-	list.Append(fmt.Sprintf("%v"), dataTwo)
+	list.Append(fmt.Sprintf("%v", dataOne), dataOne)
+	list.Append(fmt.Sprintf("%v", dataTwo), dataTwo)
 	head := list.Head
 	tail := list.Tail
 	list.MoveToFront(tail)
